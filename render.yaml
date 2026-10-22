@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: vaishu-ai-assistant
+    runtime: python
+    plan: starter
+    buildCommand: python -m pip install -r backend/requirements.txt
+    startCommand: uvicorn main:app --app-dir backend --host 0.0.0.0 --port ${PORT:-8080}
+    healthCheckPath: /health
+    autoDeploy: true
+    disk:
+      name: vaishu-resume-storage
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_DATABASE
+        value: krishna_ai_assistant
+      - key: MONGODB_COLLECTION
+        value: user_profiles
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: UPLOAD_DIR
+        value: /var/data/uploads
+      - key: AUTH_COOKIE_SECURE
+        value: "true"
+      - key: FRONTEND_ORIGINS
+        value: https://vaishu-ai-assistant.onrender.com

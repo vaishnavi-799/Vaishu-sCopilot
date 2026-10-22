@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Chat with Vaishu's AI Assistant." />
+  <title>AI chat · Vaishu's AI Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="chat.css" />
+  <link rel="stylesheet" href="test.css" />
+  <link rel="stylesheet" href="navigation.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <main class="chat-shell">
+    <header class="chat-header">
+      <a class="brand" href="index.html"><span class="brand-mark">V</span><span>Vaishu's<br><b>AI Assistant</b></span></a>
+      <nav><a href="dashboard.html">Dashboard</a><a href="index.html">Onboarding</a><a href="users.html">Saved profiles</a><button id="signOutButton" type="button">Sign out</button></nav>
+    </header>
+    <section class="chat-card" aria-label="AI assistant chat">
+      <div class="chat-intro"><span class="eyebrow">Your career companion</span><h1>Let’s figure out your next move.</h1><p>Ask for ideas, a learning plan, interview practice, or a second opinion.</p></div>
+      <div class="suggestions" aria-label="Suggested questions">
+        <button type="button" data-question="How can I make a practical career plan for the next 90 days?">90-day career plan</button>
+        <button type="button" data-question="What skills should I build for a career in technology?">Skills to build</button>
+        <button type="button" data-question="Can you help me prepare for a job interview?">Interview practice</button>
+        <button type="button" class="test-launch" id="testLaunch">✦ Take a Test</button>
+      </div>
+      <div class="messages" id="messages" role="log" aria-live="polite"><div class="message assistant"><div class="avatar">V</div><div class="bubble">Hi! I’m here to help you think through your career goals. What would you like to work on?</div></div></div>
+      <div class="typing" id="typing" hidden><span class="avatar">V</span><span>Thinking<span class="dots">...</span></span></div>
+      <form class="composer" id="chatForm"><label class="sr-only" for="message">Message</label><textarea id="message" rows="1" maxlength="4000" placeholder="Ask me anything about your next step…" required></textarea><button id="sendButton" type="submit"><span>Send</span><span aria-hidden="true">→</span></button></form>
+      <p class="error" id="error" role="alert" hidden></p><p class="disclaimer">AI-generated guidance can be imperfect. Use it as a starting point for your own decisions.</p>
+    </section>
+  </main>
+  <section class="test-panel" id="testPanel" hidden aria-label="Learning test">
+    <div class="test-setup" id="testSetup">
+      <div class="test-panel-head"><div><button class="secondary-test-button test-back" id="backToChatSetup" type="button">← Back to chat</button><span class="eyebrow">Knowledge check</span><h2>Ready to test yourself?</h2><p>Use your current lesson or enter a topic to create a focused quiz.</p></div><button class="test-close" id="testClose" type="button" aria-label="Close test">×</button></div>
+      <label class="test-field"><span>Subject</span><select id="testSubject"><option value="">Choose or enter a topic below</option><option>Python</option><option>C++</option><option>DSA</option><option>DBMS</option><option>SQL</option><option>Web development</option></select></label><label class="test-field"><span>Lesson or topic <small>(optional if discussed above)</small></span><input id="testTopic" maxlength="300" placeholder="e.g. Python functions, interview skills" /></label>
+      <div class="test-settings"><label class="test-field"><span>Difficulty</span><select id="testDifficulty"><option>Easy</option><option selected>Medium</option><option>Hard</option></select></label><label class="test-field"><span>Questions</span><select id="testQuestionCount"><option value="5" selected>5 questions</option><option value="10">10 questions</option><option value="15">15 questions</option></select></label></div>
+      <label class="mock-quiz-toggle"><input id="useMockQuiz" type="checkbox" /> Use sample quiz data (development only)</label>
+      <button class="secondary-test-button" id="viewDashboard" type="button">View my progress</button>
+      <p class="test-error" id="testError" role="alert" hidden></p><button class="primary-test-button" id="startTest" type="button">Generate test →</button>
+    </div>
+    <div class="test-taking" id="testTaking" hidden>
+      <div class="test-taking-head"><div><button class="secondary-test-button test-back" id="backToChatTaking" type="button">← Back to chat</button><span class="eyebrow">Learning test</span><h2 id="testTitle">Your test</h2><p id="sampleQuizLabel" class="sample-quiz-label" hidden>Sample questions for development only; not personalized AI-generated questions.</p></div><div class="test-timer" id="testTimer">00:00</div></div>
+      <div class="test-progress-meta"><span id="testProgressText">Question 1 of 5</span><span id="answeredText">0 answered</span></div><div class="test-progress"><div id="testProgressBar"></div></div>
+      <div class="question-card"><span class="question-number" id="questionNumber">Question 1</span><h3 id="questionPrompt"></h3><div class="option-list" id="optionList"></div></div>
+      <div class="test-navigation"><button class="secondary-test-button" id="previousQuestion" type="button">← Previous</button><button class="secondary-test-button" id="nextQuestion" type="button">Next →</button><button class="primary-test-button" id="submitTest" type="button" hidden>Submit test</button></div>
+    </div>
+    <div class="test-results" id="testResults" hidden>
+      <div id="resultSummaryContent">
+      <div class="result-hero"><span class="eyebrow">Test complete</span><h2 id="resultTitle">Great work.</h2><div class="score-circle"><strong id="resultPercentage">0%</strong><span id="resultScore">0/0 correct</span></div><p id="resultSummary"></p></div>
+      <p class="dashboard-note result-threshold">Passing score: <span id="passingThreshold">70</span>% or higher.</p>
+      <div class="result-stats"><div><b id="resultTotal">0</b><span>Total questions</span></div><div><b id="resultCorrect">0</b><span>Correct</span></div><div><b id="resultIncorrect">0</b><span>Incorrect</span></div><div><b id="resultUnanswered">0</b><span>Unanswered</span></div><div><b id="resultTime">0:00</b><span>Time taken</span></div></div>
+      <div class="weak-topics" id="strongTopics" hidden><h3>Strong areas</h3><div id="strongTopicList"></div></div><div class="weak-topics" id="weakTopics" hidden><h3>Areas to improve</h3><div id="weakTopicList"></div></div><div class="weak-topics" id="conceptsToReview" hidden><h3>Concepts to revisit</h3><div id="conceptsToReviewList"></div></div>
+      <div class="assessment-plan" id="assessmentPlan" hidden><h3>Recommended learning plan</h3><div id="assessmentPlanContent"></div></div><div class="verified-skills" id="verifiedSkills" hidden><h3>Verified skill by passed assessment</h3><div id="verifiedSkillContent"></div><p class="dashboard-note">A passed quiz is one checkpoint, not proof of job readiness.</p></div><section class="skill-analysis" id="skillAnalysis" hidden><h3>Skill estimate by topic</h3><p id="levelRulesNote" class="dashboard-note"></p><div id="topicAnalysisContent"></div></section><div class="review-list" id="reviewList"></div>
+      <div class="result-actions"><button class="secondary-test-button" id="backToChatResults" type="button">← Back to chat</button><button class="secondary-test-button" id="retakeTest" type="button">Retake test</button><button class="secondary-test-button" id="viewDashboardFromResults" type="button">View progress dashboard</button><button class="primary-test-button" id="learnWeakTopics" type="button" hidden>Learn weak topics →</button></div>
+      </div>
+      <section class="progress-dashboard" id="progressDashboard" hidden>
+        <div class="dashboard-heading"><div><h3>Student progress dashboard</h3><p id="dashboardNote" class="dashboard-note"></p></div><div class="setup-actions"><button class="secondary-test-button" id="backToAssessment" type="button">← Back</button><button class="secondary-test-button" id="backToChatDashboard" type="button">Back to chat</button><button class="secondary-test-button" id="refreshDashboard" type="button">Refresh</button></div></div>
+        <p class="test-error" id="dashboardError" role="alert" hidden></p>
+        <div class="dashboard-cards" id="dashboardCards"></div>
+        <div class="dashboard-columns"><section><h4>Score trend</h4><p id="trendNote" class="dashboard-note"></p><div id="scoreTrend" class="score-trend" aria-label="Historical assessment scores"></div></section><section><h4>Topic strengths and gaps</h4><div id="topicSummaryContent"></div></section></div>
+        <div class="dashboard-columns"><section><h4>Target-role skill gaps</h4><div id="skillGapContent"></div></section><section><h4>Verified skills</h4><div id="verifiedSkillDashboard"></div></section></div>
+        <div class="dashboard-columns"><section><h4>Skills from your profile</h4><div id="profileSkillContent"></div></section><section><h4>Skills from your resume</h4><div id="resumeSkillContent"></div></section></div>
+        <section class="assessment-plan skill-map-panel"><div class="skill-map-heading"><h4>Skill learning map</h4><label>Target role <select id="skillMapRole"></select></label></div><p class="dashboard-note">Topics only complete after their learning tasks are checked and a topic assessment reaches the passing threshold.</p><div id="skillMapContent"></div></section>
+        <section class="verified-skills" id="skillQualificationPanel" hidden><h4>Eligible resume updates</h4><p class="dashboard-note">A skill is listed only after all required topics and the skill assessment are complete. Adding it requires your confirmation.</p><div id="skillQualificationContent"></div></section>
+        <section class="assessment-plan dashboard-plan"><h4>Current learning plan</h4><p id="learningPlanProgress" class="dashboard-note"></p><div id="dashboardPlanContent"></div></section>
+        <section><h4>Recent assessments</h4><div id="historyContent"></div></section>
+        <p class="next-action" id="dashboardNextAction"></p>
+      </section>
+    </div>
+  </section>
+  <script src="chat.js"></script>
+  <script src="test.js"></script>
+</body>
+</html>

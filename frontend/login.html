@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign in · Vaishu's AI Assistant</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="auth.css" />
+</head>
+<body>
+  <main class="auth-card">
+    <a class="auth-brand" href="index.html">Vaishu's <b>AI Assistant</b></a>
+    <span class="eyebrow">Welcome back</span>
+    <h1>Sign in to your learning journey.</h1>
+    <p>Your saved profile, assessment history, and progress will be restored.</p>
+    <form id="loginForm">
+      <label class="field"><span>Email address</span><input name="email" type="email" autocomplete="username" required /></label>
+      <label class="field"><span>Password</span><input name="password" type="password" autocomplete="current-password" required maxlength="128" /></label>
+      <button class="auth-submit" type="submit">Sign in</button>
+    </form>
+    <p id="authMessage" class="auth-message" role="alert" hidden></p>
+    <p class="auth-footnote">New here? <a href="index.html">Create your student profile</a></p>
+  </main>
+  <script src="auth.js"></script>
+</body>
+</html>
