@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Vaishu's AI Assistant
 
 Student onboarding, authenticated profile-aware chat, backend-scored assessments, persistent learning plans, resume versioning, and separate progress dashboards. The application uses a static HTML/CSS/JavaScript frontend, FastAPI, and MongoDB. FastAPI serves the existing frontend and API from one origin; Render deploys both in one Web Service.
@@ -167,3 +168,7 @@ Use your own repository URL in the command. Do not put passwords, `MONGODB_URI`,
 - **Chat or AI test generation fails:** check that `GEMINI_API_KEY` is set in Render (not in browser files), the key is active, the selected model is available, and the project has quota. Gemini rate limits are temporary; wait and retry. Basic scoring and saved dashboard calculations do not require Gemini.
 - **Uploads disappear or resume file paths fail:** verify the Render disk is attached at `/var/data` and `UPLOAD_DIR` is `/var/data/uploads`. MongoDB stores profile/resume metadata; the disk stores uploaded file bytes.
 - **Old user data is missing:** deployment does not automatically copy a local database into Atlas. Verify the source database name and collection counts, then migrate/restore the existing `krishna_ai_assistant` data to Atlas without dropping the source.
+=======
+# Vaishu-sCopilot
+Student onboarding ai chatbot , assessments, resume versioning, and separate progress dashboards.
+>>>>>>> 79f9a75a7fccecc02b29e6b3f04f13449dd7d5c6
