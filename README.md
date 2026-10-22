@@ -2,6 +2,7 @@
 
 ### A Profile-Aware AI Learning, Assessment, and Career Guidance Platform
 🔗 **Live Demo:** [https://vaishu-scopilot.onrender.com](https://vaishu-scopilot.onrender.com)
+
 Vaishu's AI Assistant is a full-stack web application designed to help
 students maintain a personalized learning profile, ask profile-aware
 questions, take assessments, track learning progress, manage resume
